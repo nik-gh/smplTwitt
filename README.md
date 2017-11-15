@@ -1,0 +1,2 @@
+# smplTwitt
+Simple Twitter Clone
