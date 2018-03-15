@@ -22,6 +22,14 @@
   margin: 5px;
 }
 
+#tweetSuccess {
+  display: none;
+}
+
+#tweetFail {
+  display: none;
+}
+
 #toggleFollow:hover {
   color: rgb(36, 148, 14);
   cursor: pointer;

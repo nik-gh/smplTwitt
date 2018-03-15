@@ -108,12 +108,13 @@
           url: url,
           data: data,
           success: function(result) {
-            alert(result);
-            /* if (result == "1") {
-              
-            } else if(result == "2") {
-              
-            } */
+            if (result == "1") {
+              $("#tweetSuccess").show();
+              $("#tweetFail").hide();
+            } else if(result != "") {
+              $("#tweetFail").html(result).show();
+              $("#tweetSuccess").hide();
+            }
           }
         })
       })

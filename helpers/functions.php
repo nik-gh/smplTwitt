@@ -52,6 +52,9 @@
         }
         $whereClause .=  " user_id = '$rowId'";
       }
+    } else if ($type == 'myTweets') {
+      $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
+      $whereClause = "WHERE user_id ='$escId'";
     }
 
 
@@ -98,7 +101,8 @@
 
   function displayTweetBox() {
     if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
-      echo '
+      echo '<div id="tweetSuccess" class="alert alert-success">Your tweet was posted</div>
+        <div id="tweetFail" class="alert alert-warning"></div>
         <div class="form-group">
           <textarea class="form-control" id="tweetContent"></textarea>
         </div>
