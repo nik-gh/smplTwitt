@@ -1,12 +1,31 @@
 /* SignUp Login toggle*/
 #toggleLogin {
-  padding-right: 3rem;
+  margin-right: 1rem;
 }
 
 #loginAlert {
   display: none;
 }
 
+.mainContainer {
+  padding: 1.25rem;
+}
+
+.time {
+  color: lightgray;
+}
+
+.tweet {
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+}
+
+#toggleFollow:hover {
+  color: rgb(36, 148, 14);
+  cursor: pointer;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

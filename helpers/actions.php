@@ -54,4 +54,38 @@
       exit();
     }
   }
+
+  if($_GET['action'] == 'toggleFollow') {
+    $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
+    $escFId = mysqli_real_escape_string($conn, $_POST['userId']);
+    $query = "SELECT * FROM isFollowing WHERE follower = '$escId' AND isFollowing = '$escFId' LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+      $escRowId = mysqli_real_escape_string($conn, $row['id']);
+      $query = "DELETE FROM isFollowing WHERE id = '$escRowId' LIMIT 1";
+      mysqli_query($conn, $query);
+      echo '1';
+    } else {
+      $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
+      $escFId = mysqli_real_escape_string($conn, $_POST['userId']);
+      $query = "INSERT INTO isFollowing (follower, isFollowing) VALUES ('$escId', '$escFId')";
+      mysqli_query($conn, $query);
+      echo '2';
+    }
+  }
+
+  if($_GET['action'] == 'postTweet') {
+    if(!$_POST['tweetContent']) {
+      echo 'Your tweet is empty';
+    } else if(strlen($_POST['tweetContent']) > 300) {
+      echo 'Your tweet is too long';
+    } else {
+      $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
+      $escTweet = mysqli_real_escape_string($conn, $_POST['tweetContent']);
+      $query = "INSERT INTO tweets (`tweet`, `user_id`, `datetime`) VALUES ('$escTweet', '$escId', NOW())";
+      mysqli_query($conn, $query);
+      echo '1';
+    }
+  }
 ?>

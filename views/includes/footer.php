@@ -39,7 +39,7 @@
           </form>
           </div>
           <div class="modal-footer">
-            <a id="toggleLogin">Sign Up</a>
+            <a class="btn btn-outline-secondary" id="toggleLogin">Sign Up</a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" id="loginSignUpBtn">Login</button>
           </div>
@@ -80,6 +80,43 @@
           }
         })
       });
+
+      $(".togFlw").click(function() {
+        let id = $(this).attr("data-userId");
+        let url = "./helpers/actions.php?action=toggleFollow";
+        let data = "userId=" + id;
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          success: function(result) {
+            if (result == "1") {
+              $("a[data-userId="+ id +"]").html("Follow");
+            } else if(result == "2") {
+              $("a[data-userId="+ id +"]").html("UnFollow");
+            }
+          }
+        })
+      })
+
+      $("#postTweetBtn").click(function() {
+        
+        let url = "./helpers/actions.php?action=postTweet";
+        let data = "tweetContent=" + $("#tweetContent").val();
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          success: function(result) {
+            alert(result);
+            /* if (result == "1") {
+              
+            } else if(result == "2") {
+              
+            } */
+          }
+        })
+      })
     </script>
 
   </body>
