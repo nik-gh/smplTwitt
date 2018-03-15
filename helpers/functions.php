@@ -55,6 +55,19 @@
     } else if ($type == 'myTweets') {
       $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
       $whereClause = "WHERE user_id ='$escId'";
+    } else if ($type == 'search') {
+      $escQry = mysqli_real_escape_string($conn, $_GET['qry']);
+      echo "<p>Showing search results for '$escQry'</p>";
+      $whereClause = "WHERE tweet LIKE '%$escQry%'";
+    } else if (is_numeric($type)) {
+      $escUID = mysqli_real_escape_string($conn,$type);
+      $userQry = "SELECT `id`, `email` FROM users WHERE id = ".$escUID." LIMIT 1";
+      $userQryResult = mysqli_query($conn, $userQry);
+      $user = mysqli_fetch_assoc($userQryResult);
+
+      echo "<h3>".mysqli_real_escape_string($conn,$user['email'])."'s tweets</h3><hr>";
+
+      $whereClause = "WHERE user_id = '$escUID'";
     }
 
 
@@ -92,11 +105,12 @@
   }
 
   function displaySearch() {
-    echo '<div class="form-inline">
+    echo '<form class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control" id="search" placeholder="Search">
+    <input type="hidden" name="page" value="search">
+      <input type="text" class="form-control" name="qry" id="search" placeholder="Search">
     </div>
-    <button class="btn btn-primary">Search Tweets</button></div><hr>';
+    <button type="submit" class="btn btn-primary">Search Tweets</button></form><hr>';
   }
 
   function displayTweetBox() {
@@ -107,6 +121,16 @@
           <textarea class="form-control" id="tweetContent"></textarea>
         </div>
         <button id="postTweetBtn" class="btn btn-primary">Post Tweet</button>';
+    }
+  }
+
+  function displayUsers() {
+    global $conn;
+    $query = "SELECT id, email FROM users LIMIT 30";
+    $result = mysqli_query($conn, $query);
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+      echo "<p><a href='?page=publicProfiles&userId=".$row['id']."'>".$row['email']."</a></p>";
     }
   }
 ?>
