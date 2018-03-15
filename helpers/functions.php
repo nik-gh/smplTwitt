@@ -88,14 +88,16 @@
         echo '<p>'.$row['tweet'].'</p>';
         echo '<p><a id=\'toggleFollow\' class=\'togFlw\' data-userId='.$row['user_id'].'>';
 
-        $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
-        $escFId = mysqli_real_escape_string($conn, $row['user_id']);
-        $isFollowingQuery = "SELECT * FROM isFollowing WHERE follower = '$escId' AND isFollowing = '$escFId' LIMIT 1";
-        $isFollowingResult = mysqli_query($conn, $isFollowingQuery);
-        if(mysqli_num_rows($isFollowingResult) > 0) {
-          echo 'UnFollow';
-        } else {
-          echo 'Follow';
+        if(isset($_SESSION['id']) && isset($row['user_id'])) {
+          $escId = mysqli_real_escape_string($conn, $_SESSION['id']);
+          $escFId = mysqli_real_escape_string($conn, $row['user_id']);
+          $isFollowingQuery = "SELECT * FROM isFollowing WHERE follower = '$escId' AND isFollowing = '$escFId' LIMIT 1";
+          $isFollowingResult = mysqli_query($conn, $isFollowingQuery);
+          if(mysqli_num_rows($isFollowingResult) > 0) {
+            echo 'UnFollow';
+          } else {
+            echo 'Follow';
+          }
         }
 
         echo '</a></p>';

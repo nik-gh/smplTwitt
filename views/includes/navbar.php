@@ -6,12 +6,14 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+    <?php if(isset($_SESSION['id'])/*  && $_SESSION['id'] */) { ?>
       <li class="nav-item">
         <a class="nav-link" href="?page=timeline">Your timeline</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="?page=tweets">Your tweets</a>
       </li>
+    <?php } ?>
       <li class="nav-item">
         <a class="nav-link" href="?page=publicProfiles">Public Profiles</a>
       </li>
